@@ -1,28 +1,45 @@
 class GameAppController < ApplicationController
   
   def name_game
-    name = params[:name]
-    name_array = name.split("")
-    if name_array[0] == "a"
-      name_capitalized = name.upcase
+    if params[:name].starts_with?("a")
       render json: {
-        name: name_capitalized,
+        name: params[:name].upcase,
         message: "Hey, your name starts with the first letter of the alphabet!"
-      }
+      }.as_json
     else 
-      name_capitalized = name.upcase
-      render json: {name: name_capitalized}
+      render json: {name: params[:name].upcase}.as_json
     end
   end
 
   def number_game
     number = params[:number].to_i
     if number == 35
-     render json: {message: "That is correct!"}
+      render json: {message: "That is correct!"}.as_json
     elsif number < 35
-      render json: {message: "Higher! Keep trying."}
+      render json: {message: "Higher! Keep trying."}.as_json
     elsif number > 35
-      render json: {message: "Lower! Keep trying."}
+      render json: {message: "Lower! Keep trying."}.as_json
     end
   end
+
+  def number_game_post
+    if params[:name].starts_with?("a")
+      render json: {
+        name: params[:name].upcase,
+        message: "Hey, your name starts with the first letter of the alphabet!"
+      }.as_json
+    else 
+      render json: {name: params[:name].upcase}.as_json
+    end
+  end
+
+  def credentials
+
+    if params[:username] == "hugh" && params[:password] == "swordfish"
+      render json: {message: "valid credentials"}
+    else
+      render json: {message: "invalid credentials"}
+    end
+  end
+
 end
